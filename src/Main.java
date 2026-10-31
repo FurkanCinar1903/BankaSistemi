@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 import java.util.ArrayList;
 import Hesaplar.Hesaplar;
@@ -28,174 +29,200 @@ public class Main {
 
             int secim = scanner.nextInt();
 
-            if (secim == 1) {
+            switch (secim) {
 
-                scanner.nextLine();
+                case 1:
 
-                System.out.print("Ad Soyad: ");
-                String isim = scanner.nextLine();
+                    scanner.nextLine();
 
-                System.out.print("Hesap numarası: ");
-                int numara = scanner.nextInt();
+                    System.out.print("Ad Soyad: ");
+                    String isim = scanner.nextLine();
 
-                boolean varMi = false;
+                    System.out.print("Hesap numarası: ");
+                    int numara = scanner.nextInt();
 
-                for (int i = 0; i < hesaplar.size(); i++) {
-                    if (hesaplar.get(i).getNumara() == numara) {
-                        varMi = true;
-                    }
-                }
+                    boolean varMi = false;
 
-                if (varMi) {
-                    System.out.println("Bu numara zaten kullanılıyor!");
-                } else {
-
-                    System.out.print("Başlangıç bakiyesi: ");
-                    double bakiye = scanner.nextDouble();
-
-                    if (bakiye < 0) {
-                        System.out.println("Negatif bakiye olamaz!");
-                    } else {
-                        hesaplar.add(new Hesaplar(isim, numara, bakiye));
-                        System.out.println("Hesap oluşturuldu!");
-                    }
-                }
-            }
-
-            else if (secim == 2) {
-
-                if (hesaplar.size() == 0) {
-                    System.out.println("Henüz hesap yok!");
-                } else {
                     for (int i = 0; i < hesaplar.size(); i++) {
-                        hesaplar.get(i).hesapBilgisi();
+                        if (hesaplar.get(i).getNumara() == numara) {
+                            varMi = true;
+                        }
                     }
-                }
-            }
 
-            else if (secim == 3) {
-
-                System.out.print("Hesap numarası: ");
-                int numara = scanner.nextInt();
-
-                Hesaplar hesap = null;
-
-                for (int i = 0; i < hesaplar.size(); i++) {
-                    if (hesaplar.get(i).getNumara() == numara) {
-                        hesap = hesaplar.get(i);
-                    }
-                }
-
-                if (hesap == null) {
-                    System.out.println("Hesap bulunamadı!");
-                } else {
-                    System.out.print("Yatırılacak miktar: ");
-                    double para = scanner.nextDouble();
-
-                    if (hesap.paraYatir(para)) {
-                        System.out.println("Para yatırıldı!");
-                        System.out.println("Yeni bakiye: " + hesap.getBakiye());
+                    if (varMi) {
+                        System.out.println("Bu numara zaten kullanılıyor!");
                     } else {
-                        System.out.println("İşlem yapılamadı!");
+
+                        System.out.print("Başlangıç bakiyesi: ");
+                        double bakiye = scanner.nextDouble();
+
+                        if (bakiye < 0) {
+                            System.out.println("Negatif bakiye olamaz!");
+                        } else {
+                            hesaplar.add(new Hesaplar(isim, numara, bakiye));
+                            System.out.println("Hesap oluşturuldu!");
+                        }
                     }
-                }
-            }
 
-            else if (secim == 4) {
+                    break;
 
-                System.out.print("Hesap numarası: ");
-                int numara = scanner.nextInt();
+                case 2:
 
-                Hesaplar hesap = null;
-
-                for (int i = 0; i < hesaplar.size(); i++) {
-                    if (hesaplar.get(i).getNumara() == numara) {
-                        hesap = hesaplar.get(i);
-                    }
-                }
-
-                if (hesap == null) {
-                    System.out.println("Hesap bulunamadı!");
-                } else {
-                    System.out.print("Çekilecek miktar: ");
-                    double para = scanner.nextDouble();
-
-                    if (hesap.paraCek(para)) {
-                        System.out.println("Para çekildi!");
-                        System.out.println("Kalan bakiye: " + hesap.getBakiye());
+                    if (hesaplar.size() == 0) {
+                        System.out.println("Henüz hesap yok!");
                     } else {
-                        System.out.println("İşlem yapılamadı!");
-                    }
-                }
-            }
-
-            else if (secim == 5) {
-
-                System.out.print("Gönderen hesap: ");
-                int gonderenNo = scanner.nextInt();
-
-                System.out.print("Alıcı hesap: ");
-                int aliciNo = scanner.nextInt();
-
-                Hesaplar gonderen = null;
-                Hesaplar alici = null;
-
-                for (int i = 0; i < hesaplar.size(); i++) {
-
-                    if (hesaplar.get(i).getNumara() == gonderenNo) {
-                        gonderen = hesaplar.get(i);
+                        for (int i = 0; i < hesaplar.size(); i++) {
+                            hesaplar.get(i).hesapBilgisi();
+                        }
                     }
 
-                    if (hesaplar.get(i).getNumara() == aliciNo) {
-                        alici = hesaplar.get(i);
+                    break;
+
+                case 3:
+
+                    System.out.print("Hesap numarası: ");
+                    int yatirmaNo = scanner.nextInt();
+
+                    Hesaplar yatirmaHesabi = null;
+
+                    for (int i = 0; i < hesaplar.size(); i++) {
+                        if (hesaplar.get(i).getNumara() == yatirmaNo) {
+                            yatirmaHesabi = hesaplar.get(i);
+                        }
                     }
-                }
 
-                if (gonderen == null || alici == null) {
-                    System.out.println("Hesap bulunamadı!");
-                } else {
-
-                    System.out.print("Transfer miktarı: ");
-                    double para = scanner.nextDouble();
-
-                    if (gonderen.paraGonder(alici, para)) {
-                        System.out.println("Transfer başarılı!");
+                    if (yatirmaHesabi == null) {
+                        System.out.println("Hesap bulunamadı!");
                     } else {
-                        System.out.println("Transfer yapılamadı!");
+
+                        System.out.print("Yatırılacak miktar: ");
+                        double para = scanner.nextDouble();
+
+                        switch (Boolean.toString(yatirmaHesabi.paraYatir(para))) {
+
+                            case "true":
+                                System.out.println("Para yatırıldı!");
+                                System.out.println("Yeni bakiye: " + yatirmaHesabi.getBakiye());
+                                break;
+
+                            case "false":
+                                System.out.println("İşlem yapılamadı!");
+                                break;
+                        }
                     }
-                }
-            }
 
-            else if (secim == 6) {
+                    break;
 
-                System.out.print("Hesap numarası: ");
-                int numara = scanner.nextInt();
+                case 4:
 
-                Hesaplar hesap = null;
+                    System.out.print("Hesap numarası: ");
+                    int cekmeNo = scanner.nextInt();
 
-                for (int i = 0; i < hesaplar.size(); i++) {
-                    if (hesaplar.get(i).getNumara() == numara) {
-                        hesap = hesaplar.get(i);
+                    Hesaplar cekmeHesabi = null;
+
+                    for (int i = 0; i < hesaplar.size(); i++) {
+                        if (hesaplar.get(i).getNumara() == cekmeNo) {
+                            cekmeHesabi = hesaplar.get(i);
+                        }
                     }
-                }
 
-                if (hesap == null) {
-                    System.out.println("Hesap bulunamadı!");
-                } else {
-                    hesap.hesapBilgisi();
-                }
-            }
+                    if (cekmeHesabi == null) {
+                        System.out.println("Hesap bulunamadı!");
+                    } else {
 
-            else if (secim == 0) {
-                System.out.println("Çıkış yapıldı!");
-                break;
-            }
+                        System.out.print("Çekilecek miktar: ");
+                        double para = scanner.nextDouble();
 
-            else {
-                System.out.println("Hatalı seçim!");
+                        switch (Boolean.toString(cekmeHesabi.paraCek(para))) {
+
+                            case "true":
+                                System.out.println("Para çekildi!");
+                                System.out.println("Kalan bakiye: " + cekmeHesabi.getBakiye());
+                                break;
+
+                            case "false":
+                                System.out.println("İşlem yapılamadı!");
+                                break;
+                        }
+                    }
+
+                    break;
+
+                case 5:
+
+                    System.out.print("Gönderen hesap: ");
+                    int gonderenNo = scanner.nextInt();
+
+                    System.out.print("Alıcı hesap: ");
+                    int aliciNo = scanner.nextInt();
+
+                    Hesaplar gonderen = null;
+                    Hesaplar alici = null;
+
+                    for (int i = 0; i < hesaplar.size(); i++) {
+
+                        if (hesaplar.get(i).getNumara() == gonderenNo) {
+                            gonderen = hesaplar.get(i);
+                        }
+
+                        if (hesaplar.get(i).getNumara() == aliciNo) {
+                            alici = hesaplar.get(i);
+                        }
+                    }
+
+                    if (gonderen == null || alici == null) {
+                        System.out.println("Hesap bulunamadı!");
+                    } else {
+
+                        System.out.print("Transfer miktarı: ");
+                        double para = scanner.nextDouble();
+
+                        switch (Boolean.toString(gonderen.paraGonder(alici, para))) {
+
+                            case "true":
+                                System.out.println("Transfer başarılı!");
+                                break;
+
+                            case "false":
+                                System.out.println("Transfer yapılamadı!");
+                                break;
+                        }
+                    }
+
+                    break;
+
+                case 6:
+
+                    System.out.print("Hesap numarası: ");
+                    int arananNo = scanner.nextInt();
+
+                    Hesaplar arananHesap = null;
+
+                    for (int i = 0; i < hesaplar.size(); i++) {
+                        if (hesaplar.get(i).getNumara() == arananNo) {
+                            arananHesap = hesaplar.get(i);
+                        }
+                    }
+
+                    if (arananHesap == null) {
+                        System.out.println("Hesap bulunamadı!");
+                    } else {
+                        arananHesap.hesapBilgisi();
+                    }
+
+                    break;
+
+                case 0:
+
+                    System.out.println("Çıkış yapıldı!");
+                    scanner.close();
+                    return;
+
+                default:
+
+                    System.out.println("Hatalı seçim!");
+                    break;
             }
         }
-
-        scanner.close();
     }
 }
